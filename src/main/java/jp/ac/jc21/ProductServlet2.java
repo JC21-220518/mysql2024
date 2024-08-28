@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class IndexServlet
  */
-@WebServlet(urlPatterns = { "/result1" })
-public class Result1Servlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/item2" })
+public class ProductServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	final String dbServer = "192.168.54.231";
@@ -40,7 +40,7 @@ public class Result1Servlet extends HttpServlet {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection  conn = DriverManager.getConnection(url, user, pass);
 			
-			String sql ="SELECT item_id, item_name, price FROM Items" + " Where item_id = ? ";
+			String sql ="SELECT PRODUCT_CODE, PRODUCT_NAME FROM PRODUCT" + " Where PRODUCT_CODE = ? ";
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
@@ -52,14 +52,14 @@ public class Result1Servlet extends HttpServlet {
 			ArrayList<String[]> result = new ArrayList<>();
 			while(rs.next()==true) {
 				String[] s = new String[3];
-				s[0] = rs.getString("item_name");
-				s[1] = rs.getString("item_id");
-				s[2] = rs.getString("price");
+				s[0] = rs.getString("PRODUCT_CODE");
+				s[1] = rs.getString("PRODUCT_NAME");
+				//s[2] = rs.getString("price");
 				result.add(s);
 			}
 			
 			request.setAttribute("result", result);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/result1.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/product2.jsp");
 			rd.forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();

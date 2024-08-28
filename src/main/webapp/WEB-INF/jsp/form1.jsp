@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>3</title>
+<title>Form</title>
 </head>
 
 <%
@@ -13,7 +13,8 @@
 %>
 
 <body>
-<select>
+<form method="GET" action="./result1">
+<select name="ID">
 
 <%	for (String[] ss : result) {%>
 	<OPTION VALUE="<%= ss[1] %>">
@@ -22,5 +23,7 @@
 <% } %>
 
 </select>
+<input type="SUBMIT" value="絞り込む"/>
+</form>
 </body>
 </html>
