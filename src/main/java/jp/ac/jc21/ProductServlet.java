@@ -51,10 +51,10 @@ public class ProductServlet extends HttpServlet {
 		// 全製品の取得または選択されたメーカーに基づく製品の取得
 		String selectedMaker = request.getParameter("MAKER_CODE");
 		if (selectedMaker == null || selectedMaker.isEmpty()) {
-			sql = "SELECT PRODUCT_CODE, PRODUCT_NAME, MAKER_CODE FROM PRODUCT";
+			sql = "SELECT B.PRODUCT_CODE, B.PRODUCT_NAME, A.MAKER_NAME FROM PRODUCT B INNER JOIN MAKER A ON A.MAKER_CODE = B.MAKER_CODE ";
 			statement = conn.prepareStatement(sql);
 		} else {
-			sql = "SELECT PRODUCT_CODE, PRODUCT_NAME, MAKER_CODE FROM PRODUCT WHERE MAKER_CODE = ?";
+			sql = "SELECT B.PRODUCT_CODE, B.PRODUCT_NAME, A.MAKER_NAME FROM PRODUCT B INNER JOIN MAKER A ON A.MAKER_CODE = B.MAKER_CODE WHERE A.MAKER_CODE = ?";
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, selectedMaker);
 		}
@@ -63,9 +63,9 @@ public class ProductServlet extends HttpServlet {
 		ArrayList<String[]> products = new ArrayList<>();
 		while(rs.next()) {
 			String[] product = new String[3];
-			product[0] = rs.getString("PRODUCT_CODE");
-			product[1] = rs.getString("PRODUCT_NAME");
-			product[2] = rs.getString("MAKER_CODE");
+			product[0] = rs.getString("B.PRODUCT_CODE");
+			product[1] = rs.getString("B.PRODUCT_NAME");
+			product[2] = rs.getString("A.MAKER_NAME");
 			products.add(product);
 		}
 		request.setAttribute("products", products);
